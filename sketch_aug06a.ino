@@ -7,18 +7,21 @@ byte vol[128];
 
 #define SRATE 44100         //sample rate
 #define PINOFS 3
-#define MAX_KEYS 6
-unsigned short osc[MAX_KEYS];
+#define MAX_KEYS 8
+short osc[MAX_KEYS];
 unsigned char keys[MAX_KEYS];
+unsigned char vols[MAX_KEYS];
 unsigned char nkeys = 0;
 
 void computeKeys() {
   for (unsigned char x = 0; x < MAX_KEYS; x++) {
     keys[x] = 128;
+    vols[x] = 0;
   }
   nkeys = 0;
   for (unsigned char x = 0; x < 128; x++) {
     if (vol[x]) {
+      vols[nkeys]   = vol[x];
       keys[nkeys++] = x;
       if (nkeys == MAX_KEYS)
         break;
@@ -81,11 +84,25 @@ void fixout() {
 	PORTD = out;
 }
 
+void volout() {
+	unsigned char out = 0;
+	for (unsigned char x = 0; x < MAX_KEYS; x++) {
+		osc[x] += freq[keys[x]];
+		if (osc[x] >= 0) {
+			//detect overflow
+			unsigned char temp = out + vols[x];
+			out = !(temp & 0x80) && (out & 0x80) ? 0xFF : temp;
+		}
+	}
+	PORTD = out;
+}
+
 ISR(TIMER1_COMPA_vect) {
   PORTB = 1;
   //oldout();	//5 notes = 34.40 µs
   //newout();	//5 notes = 10.56 µs
-  fixout();		//5 notes =  8.08 µs
+  //fixout();	//5 notes =  8.08 µs
+  volout();
   PORTB = 0;
 }
 
