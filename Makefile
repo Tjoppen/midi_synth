@@ -141,7 +141,7 @@ ARDUINO_MODEL = atmega328
 # based on the serial number etc. of the USB device.
 # See e.g. 97-avr-ftdi.rules from the same download location as this Makefile.
 PORT =		/dev/ttyUSB0
-PORT =		/dev/ttyUSB_myboard
+#PORT =		/dev/ttyUSB_myboard
 
 # Arduino version (e.g. 23 for 0023, or 105 for 1.0.5).
 # Make sure this matches ARDUINO_DIR below!
@@ -457,7 +457,7 @@ CSTANDARD =	-std=gnu99
 CXXSTANDARD =	-std=gnu++0x
 
 # Optimisations.
-OPT_OPTIMS =	-Os
+OPT_OPTIMS =	-O3
 OPT_OPTIMS +=	-ffunction-sections -fdata-sections
 OPT_OPTIMS +=	-mrelax
 # -mrelax crashes binutils 2.22, 2.19.1 gives 878 byte shorter program.
