@@ -5,9 +5,9 @@
 unsigned short freq[128+1];
 byte vol[128];
 
-#define SRATE 20000         //sample rate
+#define SRATE 44100         //sample rate
 #define PINOFS 3
-#define MAX_KEYS 5
+#define MAX_KEYS 6
 unsigned short osc[MAX_KEYS];
 unsigned char keys[MAX_KEYS];
 unsigned char nkeys = 0;
