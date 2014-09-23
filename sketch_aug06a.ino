@@ -116,15 +116,6 @@ void setup() {
 }
 
 
-void fixout() {
-	unsigned char out = 0;
-	for (unsigned char x = 0; x < MAX_KEYS; x++) {
-		osc[x] += freq[keys[x]];
-		out = (out >> 1) | (osc[x] >> 8) & 0x80;
-	}
-	PORTD = out;
-}
-
 void volout() {
 	unsigned char out = 0;
 	for (unsigned char x = 0; x < MAX_KEYS; x++) {
@@ -144,7 +135,6 @@ ISR(TIMER1_COMPA_vect) {
 	//return;
 
   PORTB = 1;
-  //fixout();	//5 notes =  8.08 µs
   volout();
   PORTB = 0;
 
