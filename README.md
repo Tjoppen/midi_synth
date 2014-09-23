@@ -2,6 +2,8 @@
 
 A simple Arduino Nano based MIDI synthesizer/tone generator with 8-note polyphony and 44.1 kHz sample rate.
 
+Picture: http://i.imgur.com/kZJSEjq.jpg
+
 ## How it works
 
 MIDI commands are received on the UART at 31250 baud via an optocoupler.
