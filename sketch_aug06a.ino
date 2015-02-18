@@ -28,12 +28,10 @@ void computeKeys() {
     vols2[x] = 0;
   }
   unsigned char nkeys = 0;
-  for (unsigned char x = 0; x < 128; x++) {
+  for (unsigned char x = 0; x <= MAX_KEYS; x++) {
     if (vol[x]) {
       vols2[nkeys]   = vol[x];
       keys2[nkeys++] = x;
-      if (nkeys == MAX_KEYS)
-        break;
     }
   }
 
@@ -58,14 +56,12 @@ void setup() {
   DDRD = 0xFF;
   newkeys = 0;
 
-  for (char x = 0;; x++) {
+  for (char x = 0; x <= 127; x++) {
     //A4 = 69 (440 Hz)
     float f = 440.0f * powf(2, (x - 69) / 12.0);
     freq[x] = 65536 * f / SRATE;
     //osc[x] = 0;
     vol[x] = 0;
-    if (x == 127)
-      break;
   }
   freq[128] = 0;
   computeKeys();
